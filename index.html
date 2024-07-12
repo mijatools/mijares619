@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Costo de Banner</title>
+  <!-- MDBootstrap CSS -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
+    rel="stylesheet"/>
+  <!-- jQuery UI CSS -->
+    <!-- FontAwesome Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+  <style>
+    .centered-panel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+  
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="form-outline mb-4">
+        <input type="search" id="search" class="form-control" placeholder="Buscar tarjetas..." />
+        <label class="form-label" for="search">Buscar</label>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="row card-container">
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/banner.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title" hidden>Lona normal</h5>
+          <form id="bannerForm">
+            <div class="form-outline" data-mdb-input-init>
+            <input type="text" id="length" class="form-control" placeholder="Ingrese largo" pattern="[0-9]+(\.[0-9]+)?" required>
+            <label class="form-label" for="form12">Ingrese el largo</label>
+            <div class="invalid-feedback">La longitud debe ser un número positivo.</div>
+          </div><br>
+          <div class="form-outline" data-mdb-input-init>
+            <input type="text" id="width" class="form-control" placeholder="Ingrese el ancho" pattern="[0-9]+(\.[0-9]+)?" required>
+            <label class="form-label" for="form12">Ingrese el ancho</label>
+            <div class="invalid-feedback">El ancho debe ser un número positivo.</div>
+          </div><br>
+          <label for="unit" class="form-label">Unidad de medida (cm/mts)</label>
+          <select id="unit" class="form-select" required>
+            <option value="meters">Metros</option>
+            <option value="centimeters">Centímetros</option>
+          </select><br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="invoice" id="invoiceNo" value="no" checked>
+            <label class="form-check-label" for="invoiceNo">Sin Factura</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="invoice" id="invoiceYes" value="yes">
+            <label class="form-check-label" for="invoiceYes">Con Factura (16% extra)</label>
+          </div><br>
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-paper-plane"></i> Calcular
+          </button>
+          <button type="reset" class="btn btn-secondary btn-block">
+            <i class="fas fa-undo"></i> Limpiar
+          </button>
+          <button type="button" class="btn btn-secondary btn-block" id="btnSaveAndReport">
+            <i class="fas fa-save"></i> Guardar y Generar Reporte
+          </button>
+          </form>
+          <div id="loading" class="loading-spinner"></div>
+          <div id="result" class="mt-4"></div>
+          <button type="button" class="btn btn-secondary mt-4" data-mdb-toggle="modal" data-mdb-target="#modalMultiBanner">
+            Calcular múltiples banners
+          </button>
+         
+        
+          
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/panaflex.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title" hidden>Lona panaflex</h5>
+          <form id="bannerForm">
+            <div class="form-outline" data-mdb-input-init>
+            <input type="text" id="length" class="form-control" placeholder="Ingrese largo" pattern="[0-9]+(\.[0-9]+)?" required>
+            <label class="form-label" for="form12">Ingrese el largo</label>
+            <div class="invalid-feedback">La longitud debe ser un número positivo.</div>
+          </div><br>
+          <div class="form-outline" data-mdb-input-init>
+            <input type="text" id="width" class="form-control" placeholder="Ingrese el ancho" pattern="[0-9]+(\.[0-9]+)?" required>
+            <label class="form-label" for="form12">Ingrese el ancho</label>
+            <div class="invalid-feedback">El ancho debe ser un número positivo.</div>
+          </div><br>
+          <label for="unit" class="form-label">Unidad de medida (cm/mts)</label>
+          <select id="unit" class="form-select" required>
+            <option value="meters">Metros</option>
+            <option value="centimeters">Centímetros</option>
+          </select><br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="invoice" id="invoiceNo" value="no" checked>
+            <label class="form-check-label" for="invoiceNo">Sin Factura</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="invoice" id="invoiceYes" value="yes">
+            <label class="form-check-label" for="invoiceYes">Con Factura (16% extra)</label>
+          </div><br>
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-paper-plane"></i> Calcular
+          </button>
+          <button type="reset" class="btn btn-secondary btn-block">
+            <i class="fas fa-undo"></i> Limpiar
+          </button>
+          <button type="button" class="btn btn-secondary btn-block" id="btnSaveAndReport">
+            <i class="fas fa-save"></i> Guardar y Generar Reporte
+          </button>
+          </form>
+          <div id="loading" class="loading-spinner"></div>
+          <div id="result" class="mt-4"></div>
+          <button type="button" class="btn btn-secondary mt-4" data-mdb-toggle="modal" data-mdb-target="#modalMultiBanner">
+            Calcular múltiples banners
+          </button>
+         
+        
+          
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/mate.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title" hidden>Lona Mate</h5>
+          <form id="bannerForm">
+            <div class="form-outline" data-mdb-input-init>
+            <input type="text" id="length" class="form-control" placeholder="Ingrese largo" pattern="[0-9]+(\.[0-9]+)?" required>
+            <label class="form-label" for="form12">Ingrese el largo</label>
+            <div class="invalid-feedback">La longitud debe ser un número positivo.</div>
+          </div><br>
+          <div class="form-outline" data-mdb-input-init>
+            <input type="text" id="width" class="form-control" placeholder="Ingrese el ancho" pattern="[0-9]+(\.[0-9]+)?" required>
+            <label class="form-label" for="form12">Ingrese el ancho</label>
+            <div class="invalid-feedback">El ancho debe ser un número positivo.</div>
+          </div><br>
+          <label for="unit" class="form-label">Unidad de medida (cm/mts)</label>
+          <select id="unit" class="form-select" required>
+            <option value="meters">Metros</option>
+            <option value="centimeters">Centímetros</option>
+          </select><br>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="invoice" id="invoiceNo" value="no" checked>
+            <label class="form-check-label" for="invoiceNo">Sin Factura</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="invoice" id="invoiceYes" value="yes">
+            <label class="form-check-label" for="invoiceYes">Con Factura (16% extra)</label>
+          </div><br>
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-paper-plane"></i> Calcular
+          </button>
+          <button type="reset" class="btn btn-secondary btn-block">
+            <i class="fas fa-undo"></i> Limpiar
+          </button>
+          <button type="button" class="btn btn-secondary btn-block" id="btnSaveAndReport">
+            <i class="fas fa-save"></i> Guardar y Generar Reporte
+          </button>
+          </form>
+          <div id="loading" class="loading-spinner"></div>
+          <div id="result" class="mt-4"></div>
+          <button type="button" class="btn btn-secondary mt-4" data-mdb-toggle="modal" data-mdb-target="#modalMultiBanner">
+            Calcular múltiples banners
+          </button>
+         
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/adeshivoBrillo.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title">Adhesivo Brillo</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/adeshivomate.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title">Adhesivo Mate</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/microperfo.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title">Microperforado</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/trupan.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title">Trupan</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/neon.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title">Luces neon</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 card-item">
+      <div class="card">
+        <img src="img/troquel.jpg" class="card-img-top" alt="Sunset Over the Sea"/>
+        <div class="card-body">
+          <h5 class="card-title">Troquel</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MDBootstrap JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- FontAwesome Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<script>
+  $(function() {
+    const cardTitles = [
+      "Lona normal",
+      "Lona Panaflex",
+      "Adhesivo Brillo",
+      "Adhesivo Mate",
+      "Acrilico",
+      "Trupan",
+      "Luces",
+      "Troquel"
+    
+
+
+    ];
+    // DEL BUSCADOR
+    $("#search").autocomplete({
+      source: cardTitles,
+      select: function(event, ui) {
+        const selectedTitle = ui.item.value.toLowerCase();
+        const cards = document.querySelectorAll('.card-item');
+
+        cards.forEach(function(card) {
+          const title = card.querySelector('.card-title').innerText.toLowerCase();
+
+          if (title === selectedTitle) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+    });
+
+    $("#search").on('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      const cards = document.querySelectorAll('.card-item');
+
+      cards.forEach(function(card) {
+        const title = card.querySelector('.card-title').innerText.toLowerCase();
+        const text = card.querySelector('.card-text').innerText.toLowerCase();
+
+        if (title.includes(searchTerm) || text.includes(searchTerm)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+
+ // CALCULA EL BANNER NORMAL
+ document.getElementById('bannerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const length = parseFloat(document.getElementById('length').value);
+    const width = parseFloat(document.getElementById('width').value);
+    const unit = document.getElementById('unit').value;
+    const invoice = document.querySelector('input[name="invoice"]:checked').value;
+    const pricePerSquareMeter = 50;
+
+    let area;
+    if (unit === 'centimeters') {
+      area = (length / 100) * (width / 100);
+    } else {
+      area = length * width;
+    }
+
+    let cost = area * pricePerSquareMeter;
+    if (invoice === 'yes') {
+      cost *= 1.16;
+    }
+
+    document.getElementById('result').innerText = `El costo del banner es: ${cost.toFixed(2)} Bs`;
+  });
+  
+ //FIN DEL BANNER NORMAL
+
+</script>
+
+
+<script>
+  let calculations = [];
+
+  document.getElementById('bannerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    document.getElementById('loading').style.display = 'inline-block';
+
+    setTimeout(() => {
+      const length = parseFloat(document.getElementById('length').value);
+      const width = parseFloat(document.getElementById('width').value);
+      const unit = document.getElementById('unit').value;
+      const invoice = document.querySelector('input[name="invoice"]:checked').value;
+      const pricePerSquareMeter = 50;
+
+      let area;
+      if (unit === 'centimeters') {
+        area = (length / 100) * (width / 100);
+      } else {
+        area = length * width;
+      }
+
+      let cost = area * pricePerSquareMeter;
+      if (invoice === 'yes') {
+        cost *= 1.16;
+      }
+
+      document.getElementById('result').innerText = `El costo del banner es: ${cost.toFixed(2)} Bs`;
+
+      document.getElementById('loading').style.display = 'none';
+    }, 1000);
+  });
+
+
+  
+  document.getElementById('btnSaveAndReport').addEventListener('click', function() {
+    // Guardar y generar reporte basado en el último cálculo
+    const length = parseFloat(document.getElementById('length').value);
+    const width = parseFloat(document.getElementById('width').value);
+    const unit = document.getElementById('unit').value;
+    const invoice = document.querySelector('input[name="invoice"]:checked').value;
+    const pricePerSquareMeter = 50;
+
+    let area;
+    if (unit === 'centimeters') {
+      area = (length / 100) * (width / 100);
+    } else {
+      area = length * width;
+    }
+
+    let cost = area * pricePerSquareMeter;
+    if (invoice === 'yes') {
+      cost *= 1.16;
+    }
+
+    const calculation = {
+      length,
+      width,
+      unit,
+      invoice,
+      cost: cost.toFixed(2)
+    };
+
+    calculations.push(calculation);
+
+    // Generar reporte
+    generateReport();
+
+    // Limpiar formulario
+    document.getElementById('bannerForm').reset();
+    document.getElementById('result').innerText = '';
+  });
+
+  document.getElementById('bannerForm').addEventListener('reset', function() {
+    document.getElementById('result').innerText = '';
+  });
+
+  function generateReport() {
+    let totalCost = 0;
+    let reportContent = 'Reporte de Ventas de Banners\n\n';
+    reportContent += 'No., Longitud, Ancho, Unidad de Medida, Factura, Costo (Bs)\n';
+
+    calculations.forEach((calculation, index) => {
+      totalCost += parseFloat(calculation.cost);
+      reportContent += `${index + 1}, ${calculation.length}, ${calculation.width}, ${calculation.unit}, ${calculation.invoice === 'yes' ? 'Con Factura' : 'Sin Factura'}, Bs ${calculation.cost}\n`;
+    });
+
+    reportContent += `\n\nTotal de Ventas: Bs ${totalCost.toFixed(2)}`;
+
+    // Simular descarga del archivo
+    const filename = 'reporte_ventas_banners.txt';
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    alert('Reporte generado y descargado con éxito.');
+  }
+</script>
+
+
+<!-- Modal para múltiples banners -->
+<div class="modal fade" id="modalMultiBanner" tabindex="-1" aria-labelledby="modalMultiBannerLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMultiBannerLabel">Calcular múltiples banners</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="multiBannerForm">
+          <div id="bannerList">
+            <div class="banner-item">
+              <h6>Banner 1</h6>
+              <div class="mb-4">
+                <label for="length1" class="form-label">Altura</label>
+                <input type="text" id="length1" class="form-control" placeholder="Ingrese la longitud" pattern="[0-9]+(\.[0-9]+)?" required>
+                <div class="invalid-feedback">La longitud debe ser un número positivo.</div>
+              </div>
+              <div class="mb-4">
+                <label for="width1" class="form-label">Ancho</label>
+                <input type="text" id="width1" class="form-control" placeholder="Ingrese el ancho" pattern="[0-9]+(\.[0-9]+)?" required>
+                <div class="invalid-feedback">El ancho debe ser un número positivo.</div>
+              </div>
+              <div class="mb-4">
+                <label for="unit1" class="form-label">Unidad de medida (cm/mts)</label>
+                <select id="unit1" class="form-select" required>
+                  <option value="meters">Metros</option>
+                  <option value="centimeters">Centímetros</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="addBanner" class="btn btn-outline-secondary mb-4">Añadir otro banner</button>
+          <button type="submit" class="btn btn-primary btn-block">
+            <i class="fas fa-paper-plane"></i> Calcular Total
+          </button>
+        </form>
+        <div id="multiLoading" class="loading-spinner"></div>
+        <div id="multiResult" class="mt-4"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MDBootstrap JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+
+</body>
+</html>
